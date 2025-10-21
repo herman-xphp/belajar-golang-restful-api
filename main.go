@@ -3,10 +3,13 @@ package main
 import (
 	"belajar-golang-resful-api/app"
 	"belajar-golang-resful-api/controller"
+	"belajar-golang-resful-api/helper"
 	"belajar-golang-resful-api/repository"
 	"belajar-golang-resful-api/service"
+	"net/http"
 
 	"github.com/go-playground/validator"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -21,9 +24,16 @@ func main() {
 	router := httprouter.New()
 
 	router.GET("/api/categories", categoryController.FindAll)
-	router.GET("/api/categories", categoryController.FindAll)
 	router.GET("/api/categories/:categoryId", categoryController.FindById)
 	router.POST("/api/categories/", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	server := http.Server{
+		Addr:    "localhost:3000",
+		Handler: router,
+	}
+
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
