@@ -55,7 +55,7 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 
 	category.Name = request.Name
 
-	category = service.CategoryRepository.Save(ctx, tx, category)
+	category = service.CategoryRepository.Update(ctx, tx, category)
 
 	return helper.ToCategoryResponse(category)
 }
