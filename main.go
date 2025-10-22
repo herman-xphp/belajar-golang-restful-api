@@ -3,6 +3,7 @@ package main
 import (
 	"belajar-golang-resful-api/app"
 	"belajar-golang-resful-api/controller"
+	"belajar-golang-resful-api/exception"
 	"belajar-golang-resful-api/helper"
 	"belajar-golang-resful-api/repository"
 	"belajar-golang-resful-api/service"
@@ -28,6 +29,9 @@ func main() {
 	router.POST("/api/categories/", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+
+	router.PanicHandler = exception.ErrorHandler
 
 	server := http.Server{
 		Addr:    "localhost:3000",

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"belajar-golang-resful-api/exception"
 	"belajar-golang-resful-api/helper"
 	"belajar-golang-resful-api/model/domain"
 	"belajar-golang-resful-api/model/web"
@@ -51,7 +52,9 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	category.Name = request.Name
 
@@ -77,7 +80,9 @@ func (service *CategoryServiceImpl) FindById(ctx context.Context, categoryId int
 	defer helper.CommitOrRollback(tx)
 
 	category, err := service.CategoryRepository.FindById(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return helper.ToCategoryResponse(category)
 }

@@ -8,11 +8,11 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Gadget"
+    "name": ""
 }
 
 ### Get category by Id
-GET http://localhost:3000/api/categories/1
+GET http://localhost:3000/api/categories/404
 Accept: application/json
 
 ### Update category by Id
